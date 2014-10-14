@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="client.little_practice.client"
+            android:label="@string/title_activity_client" >
+        </activity>
     </application>
 
 </manifest>
