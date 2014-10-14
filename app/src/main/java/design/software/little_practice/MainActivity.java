@@ -1,17 +1,26 @@
 package design.software.little_practice;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 
 
 public class MainActivity extends Activity {
+
+    // Constants
+    public final static String EXTRA_MESSAGE = "design.software.little_practice.Message";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
     }
 
 
@@ -36,4 +45,18 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    // Testing....
+    public void goto_client(View myview){
+        Intent client_intent = new Intent(this, client.little_practice.client.class);
+        String message = "thisssss";
+        client_intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(client_intent);
+
+    }
+
+
+
+
+
 }
