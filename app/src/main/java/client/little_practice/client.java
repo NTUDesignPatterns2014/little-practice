@@ -2,9 +2,14 @@ package client.little_practice;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.parse.Parse;
@@ -15,26 +20,14 @@ import design.software.little_practice.R;
 
 public class client extends Activity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
         Parse.initialize(this, "msUmCCBdKR3soqTtjXPoMG4xH4LKnwFwvehTjb4r", "x0Weh8Rojf7Xy7kdQlAsnYyxqHigie6vteFKeQID");
 
-
-        Intent client_intent = getIntent();
-        String message = client_intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put(message, "barrrrrrr");
-        testObject.saveInBackground();
-
-        // Create the text view
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText(message);
-
-        // Set the text view as the activity layout
-        setContentView(textView);
     }
 
 
@@ -58,5 +51,13 @@ public class client extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void upload(View MyView){
+     ParseClient pclient = new ParseClient(this);
+     Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
+     Bitmap img = Bitmap.createBitmap(300, 300, conf);
+     pclient.Upload(this, "first image", img);
+
     }
 }

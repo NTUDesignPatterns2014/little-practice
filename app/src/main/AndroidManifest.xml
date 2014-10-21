@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="design.software.little_practice" >
-    <!--- permission for Parse -->
+
+    <!-- - permission for Parse -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
 
     <application
         android:allowBackup="true"
@@ -23,6 +23,10 @@
         <activity
             android:name="client.little_practice.client"
             android:label="@string/title_activity_client" >
+        </activity>
+        <activity
+            android:name="client.little_practice.fb_login"
+            android:label="@string/title_activity_fb_login" >
         </activity>
     </application>
 

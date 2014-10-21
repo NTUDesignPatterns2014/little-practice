@@ -2,8 +2,10 @@ package client.little_practice;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
+import android.util.Log;
 
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -13,8 +15,11 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
 
 /**
  * Created by lou on 2014/10/14.
@@ -38,7 +43,7 @@ public class ParseClient {
 
 
     // function to upload an image
-    public boolean Upload(String imgname, Bitmap image){
+    public boolean Upload(Activity myact, String imgname, Bitmap image){
 
         // user login
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -48,14 +53,22 @@ public class ParseClient {
         }else{
             // prompt login
             // TODO: facebook integration
+            //Intent intent = new Intent(myact, fb_login.class);
+            //myact.startActivity(intent);
         }
 
         // create thumbnails
         Bitmap thumb = ThumbnailUtils.extractThumbnail(image, THUMB_WIDTH, THUMB_HEIGHT);
 
+        // create byte array
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] origin_byte = stream.toByteArray();
+        stream.reset();
+        thumb.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] thumb_byte = stream.toByteArray();
+
         // create ParseFiles for original image and thumbnail
-        byte[] thumb_byte = new byte[100];// TODO : convert Bitmap to byte[]
-        byte[] origin_byte = new byte[100];// TODO : convert Bitmap to byte[]
         ParseFile parseimg_thumb = new ParseFile(imgname, thumb_byte);
         ParseFile parseimg_origin = new ParseFile(imgname, origin_byte);
 
@@ -73,25 +86,33 @@ public class ParseClient {
             public void done(ParseException e) {
                 if ( e == null ) {
                     // success!
+                    Log.d("save!!", "success");
                     id.str = parseobj_origin.getObjectId();
                 }else{
                     // failed!!
+                    Log.d("save!!", "failed");
                     // TODO : handle exception
 
                 }
             }
         });
+        Log.d(imgname, "log!11222122!!");
 
         // ParseObject for thumbnail, Thunmnails objects only store ObjectID of its original image
         ParseObject parsethumb = new ParseObject("Thumbnails");
         parsethumb.put("Name", imgname);
         parsethumb.put("isThumb", true);
         parsethumb.put("Img", parseimg_thumb);
+        if ( id.str.length() == 0 ){
+            id.str = "111";
+        }
         parsethumb.put("ImgID", id.str);
         parsethumb.saveInBackground();
 
         return true;
     }
+
+
 
 
     // fetch all thumbnails
