@@ -74,7 +74,7 @@ public class ParseClient {
 
         // ParseObject for original image
         class myString{
-            public String str;
+            public String mystr = "";
 
         }
         final myString id = new myString();
@@ -87,7 +87,7 @@ public class ParseClient {
                 if ( e == null ) {
                     // success!
                     Log.d("save!!", "success");
-                    id.str = parseobj_origin.getObjectId();
+                    id.mystr = parseobj_origin.getObjectId();
                 }else{
                     // failed!!
                     Log.d("save!!", "failed");
@@ -96,6 +96,7 @@ public class ParseClient {
                 }
             }
         });
+
         Log.d(imgname, "log!11222122!!");
 
         // ParseObject for thumbnail, Thunmnails objects only store ObjectID of its original image
@@ -103,10 +104,10 @@ public class ParseClient {
         parsethumb.put("Name", imgname);
         parsethumb.put("isThumb", true);
         parsethumb.put("Img", parseimg_thumb);
-        if ( id.str.length() == 0 ){
-            id.str = "111";
+        if ( id.mystr.length() == 0 ){
+            id.mystr = "111";
         }
-        parsethumb.put("ImgID", id.str);
+        parsethumb.put("ImgID", id.mystr);
         parsethumb.saveInBackground();
 
         return true;
