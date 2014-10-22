@@ -19,7 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.v4.app.ActivityCompat.startActivity;
+//import static android.support.v4.app.ActivityCompat.startActivity;
 
 /**
  * Created by lou on 2014/10/14.
@@ -53,8 +53,8 @@ public class ParseClient {
         }else{
             // prompt login
             // TODO: facebook integration
-            //Intent intent = new Intent(myact, fb_login.class);
-            //myact.startActivity(intent);
+            Intent intent = new Intent(myact, fb_login.class);
+            myact.startActivity(intent);
         }
 
         // create thumbnails
@@ -72,12 +72,21 @@ public class ParseClient {
         ParseFile parseimg_thumb = new ParseFile(imgname, thumb_byte);
         ParseFile parseimg_origin = new ParseFile(imgname, origin_byte);
 
-        // ParseObject for original image
+        // create a class to get img id
         class myString{
             public String mystr = "";
 
         }
         final myString id = new myString();
+
+        // ParseObject for thumbnail, Thunmnails objects only store ObjectID of its original image
+        final ParseObject parsethumb = new ParseObject("Thumbnails");
+        parsethumb.put("Name", imgname);
+        parsethumb.put("isThumb", true);
+        parsethumb.put("Img", parseimg_thumb);
+        parsethumb.put("user", currentUser);
+
+        // ParseObject for original image
         final ParseObject parseobj_origin = new ParseObject("Img");
         parseobj_origin.put("Name", imgname);
         parseobj_origin.put("Img", parseimg_origin);
@@ -86,21 +95,22 @@ public class ParseClient {
             public void done(ParseException e) {
                 if ( e == null ) {
                     // success!
-                    Log.d("save!!", "success");
+                    //Log.d("save!!", "success");
                     id.mystr = parseobj_origin.getObjectId();
+                    parsethumb.put("ImgID", id.mystr);
+                    parsethumb.saveInBackground();
                 }else{
                     // failed!!
-                    Log.d("save!!", "failed");
+                    //Log.d("save!!", "failed");
                     // TODO : handle exception
 
                 }
             }
         });
 
-        Log.d(imgname, "log!11222122!!");
+        //Log.d(imgname, "log!11222122!!");
 
-        // ParseObject for thumbnail, Thunmnails objects only store ObjectID of its original image
-        ParseObject parsethumb = new ParseObject("Thumbnails");
+ /*       ParseObject parsethumb = new ParseObject("Thumbnails");
         parsethumb.put("Name", imgname);
         parsethumb.put("isThumb", true);
         parsethumb.put("Img", parseimg_thumb);
@@ -109,7 +119,7 @@ public class ParseClient {
         }
         parsethumb.put("ImgID", id.mystr);
         parsethumb.saveInBackground();
-
+*/
         return true;
     }
 

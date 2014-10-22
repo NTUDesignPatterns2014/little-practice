@@ -36,7 +36,7 @@ public class fb_login extends Activity {
 
             }
         });
-        startActivity(new Intent(this, client.class));
+        //startActivity(new Intent(this, client.class));
     }
 
 

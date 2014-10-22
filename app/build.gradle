@@ -24,4 +24,5 @@ dependencies {
     compile files('libs/Parse-1.7.0.jar')
     compile files('libs/facebook-android-sdk-3.19.0/libs/android-support-v4.jar')
     compile files('libs/facebook-android-sdk-3.19.0/libs/bolts-android-1.1.2.jar')
+    compile project(':facebook')
 }
