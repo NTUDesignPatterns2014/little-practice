@@ -22,7 +22,7 @@ public class fb_login extends Activity {
         setContentView(R.layout.activity_fb_login);
         Log.d("act/fb_login", "hihihi");
         ParseFacebookUtils.initialize("818196911534202");
-        ParseFacebookUtils.logIn(this, new LogInCallback() {
+        ParseFacebookUtils.logIn( this, new LogInCallback() {
 
             @Override
             public void done(ParseUser user, ParseException err) {
@@ -33,7 +33,6 @@ public class fb_login extends Activity {
                 } else {
                     Log.d("little_practice", "User logged in through Facebook!");
                 }
-
             }
         });
         //startActivity(new Intent(this, client.class));

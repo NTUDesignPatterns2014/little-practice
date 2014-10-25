@@ -28,6 +28,7 @@ import java.util.List;
 
 
 public class ParseClient {
+    public static final String TAG = "ParseClient";
 
     public final static int THUMB_WIDTH = 100;
     public final static int THUMB_HEIGHT = 100;
@@ -53,8 +54,11 @@ public class ParseClient {
         }else{
             // prompt login
             // TODO: facebook integration
+            Log.i(TAG, "starting fb_login");
+
             Intent intent = new Intent(myact, fb_login.class);
             myact.startActivity(intent);
+            return false;
         }
 
         // create thumbnails
