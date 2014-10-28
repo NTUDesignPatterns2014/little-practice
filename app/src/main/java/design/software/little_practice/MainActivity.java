@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-
 public class MainActivity extends Activity {
 
     // Constants
@@ -19,8 +18,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
     }
 
 
