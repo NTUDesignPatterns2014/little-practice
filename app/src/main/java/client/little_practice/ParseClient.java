@@ -2,10 +2,11 @@ package client.little_practice;
 
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -43,24 +44,53 @@ public class ParseClient {
     }
 
 
-    // function to upload an image
-    public boolean Upload(Activity myact, String imgname, Bitmap image){
+    /**
+     * function to upload an image
+     * return: 0: success; -1:need login
+     *
+     */
+    public int Upload(Context context, String imgname, Bitmap image){
 
         // user login
         ParseUser currentUser = ParseUser.getCurrentUser();
         if( currentUser != null ){
             // user active
-
+            Toast.makeText(context, "call performUpload..", Toast.LENGTH_SHORT).show();
+            performUpload(context, currentUser, imgname, image);
         }else{
-            // prompt login
-            // TODO: facebook integration
-            Log.i(TAG, "starting fb_login");
-
-            Intent intent = new Intent(myact, fb_login.class);
-            myact.startActivity(intent);
-            return false;
+            // need login fb
+            return -1;
         }
 
+
+        return 0;
+    }
+
+
+
+
+    // fetch all thumbnails
+    public List<ParseObject> getImages(){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Thumbnails");
+        query.setLimit(QUERY_LIMIT);
+        query.include("user");
+        query.whereEqualTo("isThumb", true);
+        List<ParseObject> result = new ArrayList<ParseObject>();
+        try {
+            result = query.find();
+
+        }catch(ParseException e){
+            // TODO: handle query exception
+        }
+        return result;
+
+    }
+
+
+
+
+
+    private void performUpload(Context context, ParseUser currentUser, String imgname, Bitmap image) {
         // create thumbnails
         Bitmap thumb = ThumbnailUtils.extractThumbnail(image, THUMB_WIDTH, THUMB_HEIGHT);
 
@@ -90,6 +120,8 @@ public class ParseClient {
         parsethumb.put("Img", parseimg_thumb);
         parsethumb.put("user", currentUser);
 
+        final Context fContext = context;
+
         // ParseObject for original image
         final ParseObject parseobj_origin = new ParseObject("Img");
         parseobj_origin.put("Name", imgname);
@@ -99,13 +131,15 @@ public class ParseClient {
             public void done(ParseException e) {
                 if ( e == null ) {
                     // success!
-                    //Log.d("save!!", "success");
+                    Log.i(TAG, "upload success");
+                    Toast.makeText(fContext, "Upload Succeeded", Toast.LENGTH_SHORT).show();
                     id.mystr = parseobj_origin.getObjectId();
                     parsethumb.put("ImgID", id.mystr);
                     parsethumb.saveInBackground();
                 }else{
                     // failed!!
-                    //Log.d("save!!", "failed");
+                    Log.d(TAG, "upload failed");
+                    Toast.makeText(fContext, "Upload Failed", Toast.LENGTH_SHORT).show();
                     // TODO : handle exception
 
                 }
@@ -124,26 +158,7 @@ public class ParseClient {
         parsethumb.put("ImgID", id.mystr);
         parsethumb.saveInBackground();
 */
-        return true;
-    }
 
-
-
-
-    // fetch all thumbnails
-    public List<ParseObject> getImages(){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Thumbnails");
-        query.setLimit(QUERY_LIMIT);
-        query.include("user");
-        query.whereEqualTo("isThumb", true);
-        List<ParseObject> result = new ArrayList<ParseObject>();
-        try {
-            result = query.find();
-
-        }catch(ParseException e){
-            // TODO: handle query exception
-        }
-        return result;
 
     }
 

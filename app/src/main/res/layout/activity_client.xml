@@ -17,4 +17,23 @@
         android:layout_marginLeft="101dp"
         android:layout_marginTop="141dp" />
 
+    <Button
+        android:id="@+id/btn_camera"
+        android:text="camera"
+        android:layout_below="@id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="101dp"
+        android:onClick="startCamera"
+        />
+    <ImageView
+        android:layout_below="@id/btn_camera"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:layout_marginLeft="101dp"
+        android:id="@+id/mImageView"
+        />
+
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.parse.LogInCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
@@ -21,6 +22,7 @@ public class fb_login extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fb_login);
         Log.d("act/fb_login", "hihihi");
+        Parse.initialize(this, "msUmCCBdKR3soqTtjXPoMG4xH4LKnwFwvehTjb4r", "x0Weh8Rojf7Xy7kdQlAsnYyxqHigie6vteFKeQID");
         ParseFacebookUtils.initialize("818196911534202");
         ParseFacebookUtils.logIn( this, new LogInCallback() {
 
