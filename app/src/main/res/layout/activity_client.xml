@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="101dp"
-        android:layout_marginTop="141dp" />
+        android:layout_marginTop="10dp" />
 
     <Button
         android:id="@+id/btn_camera"
@@ -28,9 +28,9 @@
         />
     <ImageView
         android:layout_below="@id/btn_camera"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:scaleType="fitXY"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:layout_marginLeft="101dp"
         android:id="@+id/mImageView"
