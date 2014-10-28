@@ -19,7 +19,11 @@ import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
+import org.opencv.android.Utils;
+import org.opencv.core.Mat;
+
 import design.software.little_practice.R;
+import design.software.little_practice.circledetection.NativeCircleDetector;
 
 public class client extends Activity {
     private static final String TAG = "client activity";
@@ -67,8 +71,16 @@ public class client extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            mBitmap = (Bitmap) extras.get("data");
+
+            Bitmap bitmapOri = (Bitmap) extras.get("data");
+            mBitmap = bitmapOri.copy(bitmapOri.getConfig(), true);
+            Mat mat = new Mat();
+            Utils.bitmapToMat(bitmapOri, mat);
+            NativeCircleDetector detector = new NativeCircleDetector();
+            detector.detect(mat);
+            Utils.matToBitmap(mat, mBitmap);
             mImageView.setImageBitmap(mBitmap);
+            //mImageView.setImageBitmap(bitmapOri);
         }
         else {
             ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
