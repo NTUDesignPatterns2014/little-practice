@@ -23,5 +23,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/Parse-1.7.0.jar')
     compile project(':facebook')
-    compile files('D:/dev/AndroidStudioProjects/little-practice/libs/Parse-1.7.1.jar')
+    compile files('/libs/Parse-1.7.1.jar')
 }

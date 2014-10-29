@@ -6,6 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_client">client</string>
     <string name="title_activity_fb_login">fb_login</string>
-    <string name="fb_app_id">791387670908669</string> <!-- tang's -->
+    <string name="fb_app_id">881126328573340</string> <!-- public account -->
+    <!-- <string name="fb_app_id">791387670908669</string> --><!-- tang's -->
     <!-- duen ru's<string name="fb_app_id">818196911534202</string> -->
+
 </resources>

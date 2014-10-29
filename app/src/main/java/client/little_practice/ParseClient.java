@@ -39,7 +39,9 @@ public class ParseClient {
     public ParseClient(Activity this_act){
 
         // initialize Parse
-        Parse.initialize( this_act, "msUmCCBdKR3soqTtjXPoMG4xH4LKnwFwvehTjb4r", "x0Weh8Rojf7Xy7kdQlAsnYyxqHigie6vteFKeQID");
+        //Parse.initialize( this_act, "msUmCCBdKR3soqTtjXPoMG4xH4LKnwFwvehTjb4r", "x0Weh8Rojf7Xy7kdQlAsnYyxqHigie6vteFKeQID");
+        // public account
+        Parse.initialize( this_act, "0qrTdvAtKokY0wOAcdw2Cur64F9iQEXVEXaFfHPm", "vWvkhu8B9ck2eF1MasLVyuzL4B4PI9xYjB9yqzRT");
 
     }
 
@@ -89,7 +91,7 @@ public class ParseClient {
 
 
 
-
+    // perform upload, User must have logged in or error!!!
     private void performUpload(Context context, ParseUser currentUser, String imgname, Bitmap image) {
         // create thumbnails
         Bitmap thumb = ThumbnailUtils.extractThumbnail(image, THUMB_WIDTH, THUMB_HEIGHT);
