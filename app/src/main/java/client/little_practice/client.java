@@ -2,10 +2,13 @@ package client.little_practice;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +22,10 @@ import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import android.content.pm.Signature;
+
 import design.software.little_practice.R;
 
 public class client extends Activity {
@@ -31,6 +38,22 @@ public class client extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
+
+        PackageInfo info;
+        try{
+            info = getPackageManager().getPackageInfo("design.software.little_practice", PackageManager.GET_SIGNATURES);
+            for(Signature signature : info.signatures)
+            {      MessageDigest md;
+                md =MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String KeyResult =new String(Base64.encode(md.digest(), 0));//String something = new String(Base64.encodeBytes(md.digest()));
+                Log.e("hash key", KeyResult);
+                Toast.makeText(this,"My FB Key is \n"+ KeyResult , Toast.LENGTH_LONG ).show();
+            }
+        }catch(PackageManager.NameNotFoundException e1){Log.e("name not found", e1.toString());
+        }catch(NoSuchAlgorithmException e){Log.e("no such an algorithm", e.toString());
+        }catch(Exception e){Log.e("exception", e.toString());}
+
 
 
         mImageView = (ImageView)findViewById(R.id.mImageView);
@@ -69,8 +92,10 @@ public class client extends Activity {
             Bundle extras = data.getExtras();
             mBitmap = (Bitmap) extras.get("data");
             mImageView.setImageBitmap(mBitmap);
+
         }
         else {
+            super.onActivityResult(requestCode, resultCode, data);
             ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
         }
     }
@@ -124,4 +149,8 @@ public class client extends Activity {
     private void toast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
+
 }
+
+
